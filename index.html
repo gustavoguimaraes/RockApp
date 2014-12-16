@@ -44,10 +44,10 @@
 
               </div>
 
-              {{#each model}}
+              {{#each artist in model}}
 
-                {{#link-to "artists.songs" this class="list-group-item"}}
-                  {{name}}
+                {{#link-to "artists.songs" artist class="list-group-item"}}
+                  {{artist.name}}
                 {{/link-to}}
 
               {{/each}}
@@ -68,8 +68,8 @@
 
     </div>
 
-      {{#each songs}}
-        <a href="#" class="list-group-item">{{title}}</a>
+      {{#each song in songs}}
+        <a href="#" class="list-group-item">{{song.title}}</a>
         {{else}}
         <div class="list-group-item empty-list">
           <div class="empty-message">
