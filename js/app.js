@@ -34,16 +34,44 @@ App.Router.map(function(){
   });
 });
 
+App.IndexRoute = Ember.Route.extend({
+  //what gets called before when at Index page
+  beforeModel: function(){
+    this.transitionTo('artists');
+  }
+});
+
 App.ArtistsRoute = Ember.Route.extend({
   model: function(){
     return App.Artists;
+  },
+  actions: {
+    createArtist: function(){
+    var name = this.get('controller').get('newArtist');
+    var artist = App.Artist.create({name: name});
+    App.Artists.pushObject(artist);
+    this.get('controller').set('newArtist', '');
+    }
   }
 });
 
 App.ArtistsSongsRoute = Ember.Route.extend({
   model: function(params){
     return App.Artists.findProperty('slug', params.slug);
+  },
+  actions: {
+    createSong: function(){
+      //short hand notation to th code below
+      // var title = this.get('controller.newSong');
+      var title = this.get('controller').get('newSong');
+      var artist = this.get('controller').get('model').get('name');
+      var song = App.Song.create({title: title, artist: artist});
+      App.Songs.pushObject(song);
+      this.get('controller').set('newSong', '');
+    }
+
   }
+
 });
 
 // App.SongCollection = Ember.ArrayProxy.extend(Ember.SortableMixin, {
