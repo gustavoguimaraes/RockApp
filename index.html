@@ -69,7 +69,9 @@
     </div>
 
       {{#each song in songs}}
-        <a href="#" class="list-group-item">{{song.title}}</a>
+        <div class="list-group-item">{{song.title}} {{rating}}
+          {{view "star-rating" maxRating=5}}
+        </div>
         {{else}}
         <div class="list-group-item empty-list">
           <div class="empty-message">
@@ -77,6 +79,25 @@
           </div>
         </div>
       {{/each}}
+    </script>
+
+    <script type="text/x-handlebars" data-template-name="star-rating">
+
+
+
+
+      <span {{bind-attr class="full:glyphicon-star:glyphicon-star-empty :rating-star :glyphicon"}} {{bind-attr data-rating=rating}}
+      {{action "setRating" target=view}}>
+
+      </span>
+
+
+
+
+
+
+
+
     </script>
 
 
