@@ -1,9 +1,6 @@
 App = Ember.Application.create();
 
-// App.Router.map(function() {
-//   // put your routes here
-// });
-
+//Creating Objects
 App.Artist = Ember.Object.extend({
   name: null,
 
@@ -28,12 +25,14 @@ App.Artists = artistNames.map(function(name){
   return App.Artist.create({name: name});
   });
 
+//Router
 App.Router.map(function(){
   this.resource('artists', function(){
     this.route('songs', {path: ':slug'});
   });
 });
 
+//Routes
 App.IndexRoute = Ember.Route.extend({
   //what gets called before when at Index page
   beforeModel: function(){
@@ -47,10 +46,11 @@ App.ArtistsRoute = Ember.Route.extend({
   },
   actions: {
     createArtist: function(){
-    var name = this.get('controller').get('newArtist');
+    var name = this.get('controller').get('newName');
     var artist = App.Artist.create({name: name});
     App.Artists.pushObject(artist);
-    this.get('controller').set('newArtist', '');
+    this.get('controller').set('newName', '');
+    this.transitionTo('artists.songs', artist);
     }
   }
 });
@@ -110,6 +110,34 @@ App.StarRatingView = Ember.View.extend({
 
 });
 
+//controllers
+App.ArtistsController = Ember.ArrayController.extend({
+  newName: '',
+  disabled: function() {
+    return Ember.isEmpty(this.get('newName'));
+  }.property('newName'),
+  canCreateSong: false,
+
+});
+
+App.ArtistsSongsController = Ember.ObjectController.extend({
+  disabled: function() {
+    return Ember.isEmpty(this.get('newSong'));
+  }.property('newSong'),
+
+  newSongPlaceholder: function(){
+    return 'New ' + this.get('name') + ' song';
+  }.property('newSong'),
+
+  actions: {
+    enableSongCreation: function() {
+      this.set('canCreateSong', true);
+    }
+  }
+
+});
+
+//Experiment in sorting objects by particular attribute
 // App.SongCollection = Ember.ArrayProxy.extend(Ember.SortableMixin, {
 //  sortProperties: ['rating'],
 //  sortAscending: false,
@@ -134,6 +162,6 @@ App.Songs.pushObject(App.Song.create({title: 'Cemetery', artist: 'Silverchair', 
 App.Songs.pushObject(App.Song.create({title: 'Fat Boy', artist: 'Silverchair', rating: 4}));
 App.Songs.pushObject(App.Song.create({title: 'Miss You', artist: 'Silverchair', rating: 5}));
 
-
+//Example of things you can do
 //App.alwaysWaiting = App.Song.create({title: 'Yellow LedBetter', artist: 'Pearl Jam', rating: 9});
 
