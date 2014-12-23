@@ -39,7 +39,7 @@
             <div class="list-group">
               <div class="list-group-item">
                <!-- // here we bind the data in the ember input helper this defined in the controller(it hold the newArtist) -->
-              {{input type="text" placeholder="New Artist" value=newName}}
+              {{input type="text" placeholder="New Artist" value=newName insert-newline="createArtist"}}
               <button class="btn btn-primary btn-sm"
               {{action "createArtist"}}
               {{bind-attr disabled=disabled}}>
@@ -67,7 +67,7 @@
     <script type="text/x-handlebars" data-template-name="artists/songs">
     <div class="list-group-item">
      {{# if canCreateSong}}
-    {{input type="text" placeholder=newSongPlaceholder value=newSong}}
+    {{input type="text" placeholder=newSongPlaceholder value=newSong insert-newline="createSong"}}
     <button class="btn btn-primary btn-sm" {{action "createSong"}}
     {{bind-attr disabled=disabled}}
     >

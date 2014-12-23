@@ -115,8 +115,8 @@ App.ArtistsController = Ember.ArrayController.extend({
   newName: '',
   disabled: function() {
     return Ember.isEmpty(this.get('newName'));
-  }.property('newName'),
-  canCreateSong: false,
+  }.property('newName')
+  //canCreateSong: false,
 
 });
 
@@ -129,9 +129,14 @@ App.ArtistsSongsController = Ember.ObjectController.extend({
     return 'New ' + this.get('name') + ' song';
   }.property('newSong'),
 
+  songCreationStarted: false,
+  canCreateSong: function(){
+    return this.get('songCreationStarted') || this.get('songs.length');
+  }.property('songCreationStarted', 'songs.length'),
+
   actions: {
     enableSongCreation: function() {
-      this.set('canCreateSong', true);
+      this.set('songCreationStarted', true);
     }
   }
 
